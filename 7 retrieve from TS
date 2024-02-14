@@ -1,0 +1,58 @@
+#include <ESP8266WiFi.h>
+#include "secrets.h"
+#include "ThingSpeak.h" // always include thingspeak header file after other header files
+and custom macros
+char ssid[] = "Xiaomi 11i"; // your network SSID (name)
+char pass[] = "kishore.m"; // your network password
+int keyIndex = 0; // your network key Index number (needed only for WEP)
+WiFiClient client;
+// Weather station channel details
+unsigned long weatherStationChannelNumber = 1901659;
+int statusCode = 0;
+int field[8] = {1,2,3,4,5,6,7,8};
+void setup() {
+Serial.begin(38400);
+delay(10); // Initialize serial
+Serial.println();
+Serial.println();
+Serial.print("Connecting to ");
+Serial.println(ssid);
+WiFi.begin(ssid, pass);
+while (WiFi.status() != WL_CONNECTED)
+{
+delay(500);
+Serial.print(".");
+}
+Serial.println("");
+Serial.println("WiFi connected");
+Serial.println(WiFi.localIP());
+ThingSpeak.begin(client);
+}
+void loop() {
+statusCode=
+ThingSpeak.readMultipleFields(weatherStationChannelNumber,"TDQ1KWVWFPDBIK
+TX");
+if(statusCode == 200)
+{
+int percentHumid = ThingSpeak.getFieldAsInt(field[1]); // Field 3
+float tempInF = ThingSpeak.getFieldAsFloat(field[0]); // Field 4
+Serial.println("% Humidity: " + String(percentHumid));-
+Serial.println("Temperature (F): " + String(tempInF));
+}
+else
+{
+Serial.println("Problem reading channel. HTTP error code " + String(statusCode));
+}
+Serial.println();
+delay(5000); // no need to fetch too often
+}
+CREATE NEW SKETCH IN SAME FILE AS "secrets.h"
+// Use this file to store all of the private credentials
+// and connection details
+#define SECRET_SSID "12121212" // replace MySSID with your WiFi
+network name
+#define SECRET_PASS "19191919" // replace MyPassword with your WiFi
+password
+#define SECRET_CH_ID 2414758// replace 0000000 with your channel number
+#define SECRET_WRITE_APIKEY "197JA2UF7SBRCX3A" // replace XYZ with
+your channel write API Key
