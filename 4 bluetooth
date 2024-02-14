@@ -1,0 +1,25 @@
+int temp;
+long tm,t,d;
+void setup()
+{
+Serial.begin(9600);
+pinMode(0,INPUT);
+analogReference(DEFAULT);
+}
+void loop()
+{
+temp = analogRead(0);
+tm = millis();
+t = tm/1000;
+d = tm%1000;
+Serial.flush();
+Serial.print("time : ");
+Serial.print(t);
+Serial.print(".");
+Serial.print(d);
+Serial.print("s\t");
+Serial.print("temperature : ");
+Serial.print(temp);
+Serial.println("f");
+delay(2000);
+}
