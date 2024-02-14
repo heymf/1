@@ -1,0 +1,14 @@
+const int ledpin=13; //led or buzzer
+void setup()
+{
+// initialize digital pin 13 as an output.
+pinMode(ledpin, OUTPUT);
+}
+// the loop function runs over and over again forever
+void loop()
+{
+digitalWrite(ledpin, HIGH); // turn the buzzer on (HIGH is the voltage level)
+delay(1000); // wait for a second
+digitalWrite(ledpin, LOW); // turn the buzzer off by making the voltage LOW
+delay(2000); // wait for a two seconds
+}
