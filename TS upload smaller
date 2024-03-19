@@ -1,0 +1,39 @@
+#include<DHT.h>
+#include<ESP8266WiFi.h>
+#include<ThingSpeak.h>
+DHT dht(2, DHT11);
+const char ssid[] = "Act_WiFi 5G";
+const char pw[]= "kiranmkk@2003";
+WiFiClient client;
+void setup ()
+{
+Serial.begin(74880);
+delay(10);
+Serial.println();
+Serial.println();
+Serial.print("Connecting to");
+Serial.println(ssid);
+WiFi.begin(ssid, pw);
+while(WiFi.status() != WL_CONNECTED)
+{
+delay(500);
+Serial.print(".");
+}
+Serial.println("");
+Serial.println("WiFi connected");
+Serial.println(WiFi.localIP());
+ThingSpeak.begin(client);
+}
+void loop()
+{
+Serial.print("Temperature: ");
+Serial.print(dht.readTemperature());
+Serial.println("C");
+Serial.print("Humidity:");
+Serial.print(dht.readHumidity());
+Serial.println("%");
+ThingSpeak.setField(1, dht.readTemperature()); 
+ThingSpeak.setField(2, dht.readHumidity());
+ThingSpeak.writeFields(2476984, "1MJQP1B93V6WPXXW");
+delay(10000);
+}
