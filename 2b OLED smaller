@@ -1,0 +1,25 @@
+#include<Wire.h>
+#include<Adafruit_GFX.h>
+#include<Adafruit_SSD1306.h>
+#include<DHT.h>
+DHT dht (2, DHT11);
+Adafruit_SSD1306 display(128, 64, &Wire, -1);
+void setup ()
+{
+display.begin(SSD1306_SWITCHCAPVCC, 0x3c);
+delay(2000);
+display.clearDisplay();
+display.setTextSize(2);
+display.setCursor(0, 0);
+display.setTextColor(WHITE);
+}
+void loop()
+{
+display.print("Temperature: ");
+display.print(dht.readTemperature());
+display.println("C");
+display.print("Humidity :");
+display.print(dht.readHumidity());
+display.println("%");
+display.display();
+}
