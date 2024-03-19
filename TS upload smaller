@@ -2,8 +2,8 @@
 #include<ESP8266WiFi.h>
 #include<ThingSpeak.h>
 DHT dht(2, DHT11);
-const char ssid[] = "Act_WiFi 5G";
-const char pw[]= "kiranmkk@2003";
+const char ssid[] = "";
+const char pw[]= "";
 WiFiClient client;
 void setup ()
 {
@@ -34,6 +34,6 @@ Serial.print(dht.readHumidity());
 Serial.println("%");
 ThingSpeak.setField(1, dht.readTemperature()); 
 ThingSpeak.setField(2, dht.readHumidity());
-ThingSpeak.writeFields(2476984, "1MJQP1B93V6WPXXW");
+ThingSpeak.writeFields(channelnumber, "apikey");
 delay(10000);
 }
